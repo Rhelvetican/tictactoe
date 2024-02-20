@@ -88,7 +88,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "tictactoe"
+name = "tictactoe_game"
 version = "1.0.0"
 dependencies = [
  "array2d",

@@ -1,5 +1,5 @@
 [package]
-name = "tictactoe"
+name = "tictactoe_game"
 authors = ["Rhelv <bionicvnb@gmail.com>"]
 description = "A simple tictactoe game."
 version = "1.0.0"
