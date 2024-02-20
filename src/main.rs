@@ -1,9 +1,12 @@
 mod game;
 use game::{Board, CellState};
+use rand::{thread_rng, Rng};
 fn main() {
     let mut board = Board::new();
-    let mut is_player1 = true;
+    let mut is_player1 = thread_rng().gen_bool(0.5);
     board.print();
+
+    // Game loop
     loop {
         if is_player1 {
             board.set_cell(CellState::X).unwrap();
@@ -43,7 +46,6 @@ fn main() {
                 return;
             }
         }
-
         is_player1 = !is_player1;
     }
 }
