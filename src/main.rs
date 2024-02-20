@@ -124,6 +124,25 @@ fn main() {
             Some(CellState::Unoccupied) => (),
             None => (),
         };
+        for (x, y) in [
+            (0usize, 0usize),
+            (1usize, 0usize),
+            (2usize, 0usize),
+            (0usize, 1usize),
+            (1usize, 1usize),
+            (2usize, 1usize),
+            (0usize, 2usize),
+            (1usize, 2usize),
+            (2usize, 2usize),
+        ] {
+            if board.cells[(x, y)] == CellState::Unoccupied {
+                break;
+            }
+            if x == 2 && y == 2 {
+                println!("It's a draw!");
+                return;
+            }
+        }
         is_player1 = !is_player1;
     }
 }
