@@ -1,5 +1,3 @@
-use rprompt::prompt_reply as input;
-
 mod game;
 use game::{Board, CellState};
 fn main() {
@@ -8,9 +6,9 @@ fn main() {
     board.print();
     loop {
         if is_player1 {
-            board.set_cell(row, col, CellState::X).unwrap();
+            board.set_cell(CellState::X).unwrap();
         } else {
-            board.set_cell(row, col, CellState::O).unwrap();
+            board.set_cell(CellState::O).unwrap();
         }
 
         board.print();

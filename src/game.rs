@@ -1,5 +1,5 @@
 use array2d::{Array2D, Error};
-
+use rprompt::prompt_reply as input;
 use std::fmt::Display;
 
 #[derive(Clone, Copy, PartialEq)]
@@ -29,7 +29,9 @@ impl Board {
             cells: Array2D::filled_with(CellState::Unoccupied, 3, 3),
         }
     }
-    pub fn set_cell(&mut self, row: usize, col: usize, state: CellState) -> Result<(), Error> {
+    pub fn set_cell(&mut self, state: CellState) -> Result<(), Error> {
+        let row = input("Enter row: ").unwrap().parse::<usize>().unwrap() - 1usize;
+        let col = input("Enter column: ").unwrap().parse::<usize>().unwrap() - 1usize;
         if row > 2 || col > 2 {
             println!("Invalid row or column");
             Err(Error::IndexOutOfBounds(row))
