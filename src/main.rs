@@ -112,6 +112,7 @@ fn main() {
             board.set_cell(row, col, CellState::O).unwrap();
         }
 
+        board.print();
         match board.check_win() {
             Some(CellState::X) => {
                 println!("Player 1 wins!");
@@ -143,7 +144,7 @@ fn main() {
                 return;
             }
         }
-        board.print();
+
         is_player1 = !is_player1;
     }
 }
