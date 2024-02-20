@@ -102,8 +102,8 @@ impl Board {
 fn main() {
     let mut board = Board::new();
     let mut is_player1 = true;
+    board.print();
     loop {
-        board.print();
         let row = input("Enter row: ").unwrap().parse::<usize>().unwrap() - 1usize;
         let col = input("Enter column: ").unwrap().parse::<usize>().unwrap() - 1usize;
         if is_player1 {
@@ -143,6 +143,7 @@ fn main() {
                 return;
             }
         }
+        board.print();
         is_player1 = !is_player1;
     }
 }
