@@ -34,13 +34,17 @@ impl Board {
             println!("Invalid row or column");
             Err(Error::IndexOutOfBounds(row))
         } else {
+            if self.cells[(row, col)] != CellState::Unoccupied {
+                println!("Cell already occupied");
+                return Err(Error::IndexOutOfBounds(row));
+            }
             self.cells[(row, col)] = state;
             Ok(())
         }
     }
     fn check_win(&self) -> Option<CellState> {
         // Check rows
-        for i in 0usize..2usize {
+        for i in 0usize..=2usize {
             let symbol = self.cells[(i, 0)];
             if symbol != CellState::Unoccupied
                 && symbol == self.cells[(i, 1)]
@@ -51,7 +55,7 @@ impl Board {
         }
 
         // Check columns
-        for i in 0usize..2usize {
+        for i in 0usize..=2usize {
             let symbol = self.cells[(0, i)];
             if symbol != CellState::Unoccupied
                 && symbol == self.cells[(1, i)]
@@ -79,23 +83,19 @@ impl Board {
 
         None
     }
-}
-
-impl Display for Board {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let mut board = String::new();
-        for row in 0..3 {
-            for col in 0..3 {
-                board.push_str(&format!("{}", self.cells[(row, col)]));
+    fn print(&self) {
+        for row in 0usize..=2usize {
+            for col in 0usize..=2usize {
+                print!("{}", self.cells[(row, col)]);
                 if col < 2 {
-                    board.push('|');
+                    print!("|");
                 }
             }
+            println!();
             if row < 2 {
-                board.push_str("\n-----\n");
+                println!("-----");
             }
         }
-        write!(f, "{}", board)
     }
 }
 
@@ -103,7 +103,7 @@ fn main() {
     let mut board = Board::new();
     let mut is_player1 = true;
     loop {
-        println!("{}", board);
+        board.print();
         let row = input("Enter row: ").unwrap().parse::<usize>().unwrap();
         let col = input("Enter column: ").unwrap().parse::<usize>().unwrap();
         if is_player1 {
@@ -111,6 +111,19 @@ fn main() {
         } else {
             board.set_cell(row, col, CellState::O).unwrap();
         }
+
+        match board.check_win() {
+            Some(CellState::X) => {
+                println!("Player 1 wins!");
+                break;
+            }
+            Some(CellState::O) => {
+                println!("Player 2 wins!");
+                break;
+            }
+            Some(CellState::Unoccupied) => (),
+            None => (),
+        };
         is_player1 = !is_player1;
     }
 }
