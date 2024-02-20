@@ -11,7 +11,7 @@ homepage = "https://github.com/Rhelvetican/tictactoe"
 [dependencies]
 array2d = "0.3.2"
 rprompt = "2.1.1"
-rand = "0.8.5"
+rand = {version = "0.8.5", default-features = false, features = ["std", "std_rng"]}
 
 [profile.release]
 lto = "fat"
