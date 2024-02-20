@@ -8,3 +8,13 @@ edition = "2021"
 array2d = "0.3.2"
 rprompt = "2.1.1"
 rand = "0.8.5"
+
+[profile.release]
+lto = "fat"
+codegen-units = 1
+strip = "symbols"
+opt-level = 3
+panic = "abort"
+
+[build]
+rustflags = ["-C", "target-cpu=native", "link-arg=-fuse-ld=lld"]
