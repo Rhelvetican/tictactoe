@@ -104,8 +104,8 @@ fn main() {
     let mut is_player1 = true;
     loop {
         board.print();
-        let row = input("Enter row: ").unwrap().parse::<usize>().unwrap();
-        let col = input("Enter column: ").unwrap().parse::<usize>().unwrap();
+        let row = input("Enter row: ").unwrap().parse::<usize>().unwrap() - 1usize;
+        let col = input("Enter column: ").unwrap().parse::<usize>().unwrap() - 1usize;
         if is_player1 {
             board.set_cell(row, col, CellState::X).unwrap();
         } else {
