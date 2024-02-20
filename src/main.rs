@@ -38,40 +38,46 @@ impl Board {
             Ok(())
         }
     }
-    fn get_cell(&self, row: usize, col: usize) -> Result<CellState, Error> {
-        match self.cells.get(row, col) {
-            Some(cell) => Ok(*cell),
-            None => Err(Error::IndexOutOfBounds(row)),
-        }
-    }
-    fn check_win(&self) -> bool {
-        for i in 0..3 {
-            if self.cells[(i, 0)] == self.cells[(i, 1)]
-                && self.cells[(i, 1)] == self.cells[(i, 2)]
-                && self.cells[(i, 0)] != CellState::Unoccupied
+    fn check_win(&self) -> Option<CellState> {
+        // Check rows
+        for i in 0usize..2usize {
+            let symbol = self.cells[(i, 0)];
+            if symbol != CellState::Unoccupied
+                && symbol == self.cells[(i, 1)]
+                && symbol == self.cells[(i, 2)]
             {
-                return true;
-            }
-            if self.cells[(0, i)] == self.cells[(1, i)]
-                && self.cells[(1, i)] == self.cells[(2, i)]
-                && self.cells[(0, i)] != CellState::Unoccupied
-            {
-                return true;
+                return Some(symbol);
             }
         }
-        if self.cells[(0, 0)] == self.cells[(1, 1)]
-            && self.cells[(1, 1)] == self.cells[(2, 2)]
-            && self.cells[(0, 0)] != CellState::Unoccupied
-        {
-            return true;
+
+        // Check columns
+        for i in 0usize..2usize {
+            let symbol = self.cells[(0, i)];
+            if symbol != CellState::Unoccupied
+                && symbol == self.cells[(1, i)]
+                && symbol == self.cells[(2, i)]
+            {
+                return Some(symbol);
+            }
         }
-        if self.cells[(0, 2)] == self.cells[(1, 1)]
-            && self.cells[(1, 1)] == self.cells[(2, 0)]
-            && self.cells[(0, 2)] != CellState::Unoccupied
+
+        // Check diagonals
+        let symbol_top_left = self.cells[(0, 0)];
+        if symbol_top_left != CellState::Unoccupied
+            && symbol_top_left == self.cells[(1, 1)]
+            && symbol_top_left == self.cells[(2, 2)]
         {
-            return true;
+            return Some(symbol_top_left);
         }
-        false
+        let symbol_top_right = self.cells[(0, 2)];
+        if symbol_top_right != CellState::Unoccupied
+            && symbol_top_right == self.cells[(1, 1)]
+            && symbol_top_right == self.cells[(2, 0)]
+        {
+            return Some(symbol_top_right);
+        }
+
+        None
     }
 }
 
