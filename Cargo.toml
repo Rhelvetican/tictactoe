@@ -1,0 +1,10 @@
+[package]
+name = "tictactoe"
+description = "A simple tictactoe game."
+version = "1.0.0"
+edition = "2021"
+
+[dependencies]
+array2d = "0.3.2"
+rprompt = "2.1.1"
+rand = "0.8.5"
